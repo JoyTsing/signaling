@@ -14,5 +14,5 @@ func NewXrtcClientPushAction() *xrtcClientPushAction {
 }
 
 func (x *xrtcClientPushAction) Execute(w http.ResponseWriter, cr *framework.ComRequest) {
-	fmt.Println("xrtcClientPushAction.Execute")
+	fmt.Println("[Action] xrtcClientPushAction.Execute")
 }

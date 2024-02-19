@@ -80,6 +80,11 @@ func responseError(w http.ResponseWriter, r *http.Request, status int, err strin
 }
 
 func StartHttpServer() error {
-	glog.Infof("[Start] HttpServer on port %d", gconf.httpPort)
+	glog.Infof("[Start] Http Server on port %d", gconf.httpPort)
 	return http.ListenAndServe(fmt.Sprintf(":%d", gconf.httpPort), nil)
+}
+
+func StartHttpsServer() error {
+	glog.Infof("[Start] Https Server on port %d", gconf.httpsPort)
+	return http.ListenAndServeTLS(fmt.Sprintf(":%d", gconf.httpsPort), gconf.httpsCert, gconf.httpsKey, nil)
 }

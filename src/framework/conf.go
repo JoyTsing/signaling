@@ -1,6 +1,8 @@
 package framework
 
-import "signaling/src/goconfig"
+import (
+	"signaling/src/goconfig"
+)
 
 type FrameworkConf struct {
 	logDir      string
@@ -10,6 +12,10 @@ type FrameworkConf struct {
 
 	httpPort      int
 	httpStaticDir string
+
+	httpsPort int
+	httpsCert string
+	httpsKey  string
 }
 
 var configFile *goconfig.ConfigFile
@@ -45,5 +51,18 @@ func loadConf(confFile string) (*FrameworkConf, error) {
 	if conf.httpStaticDir, err = configFile.GetValue("http", "staticDir"); err != nil {
 		return nil, err
 	}
+	//https config
+	if conf.httpsPort, err = configFile.Int("https", "port"); err != nil {
+		return nil, err
+	}
+
+	if conf.httpsCert, err = configFile.GetValue("https", "cert"); err != nil {
+		return nil, err
+	}
+
+	if conf.httpsKey, err = configFile.GetValue("https", "key"); err != nil {
+		return nil, err
+	}
+
 	return conf, nil
 }

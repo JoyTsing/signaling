@@ -16,9 +16,9 @@ func Init(confFile string) error {
 		return err
 	}
 
-	//fmt.Printf("%+v\n", gconf)
-
-	flag.Parse() //glog需要
+	flag.Parse() //glog使用前需要
+	//ini解析
+	//glog.Infof("gconf: %+v\n", gconf)
 
 	glog.SetLogDir(gconf.logDir)
 	glog.SetLogFileName(gconf.logFile)
