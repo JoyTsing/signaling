@@ -11,14 +11,13 @@ var gconf *FrameworkConf
 func Init(confFile string) error {
 	var err error
 
-	gconf, err = loadConf(confFile)
-	if err != nil {
+	if gconf, err = loadConf(confFile); err != nil {
 		return err
 	}
 
 	flag.Parse() //glog使用前需要
 	//ini解析
-	//glog.Infof("gconf: %+v\n", gconf)
+	//fmt.Printf("gconf: %+v\n", gconf)
 
 	glog.SetLogDir(gconf.logDir)
 	glog.SetLogFileName(gconf.logFile)

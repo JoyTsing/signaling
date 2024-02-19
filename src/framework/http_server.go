@@ -88,3 +88,8 @@ func StartHttpsServer() error {
 	glog.Infof("[Start] Https Server on port %d", gconf.httpsPort)
 	return http.ListenAndServeTLS(fmt.Sprintf(":%d", gconf.httpsPort), gconf.httpsCert, gconf.httpsKey, nil)
 }
+
+func RegisterStaticUrl() {
+	fs := http.FileServer(http.Dir(gconf.httpStaticDir))
+	http.Handle(gconf.httpStaticPrefix, http.StripPrefix(gconf.httpStaticPrefix, fs))
+}
