@@ -34,6 +34,7 @@ func loadXrpcClient() error {
 		for i, server := range arrServer {
 			arrServer[i] = strings.TrimSpace(server)
 		}
+		//client
 		client := xrpc.NewClient(arrServer)
 		// timeout
 		setTimeConf(mSection, client)
