@@ -10,6 +10,15 @@ import (
 	"signaling/src/framework"
 )
 
+const (
+	_ = iota
+	CMDNO_PUSH
+	CMDNO_PULL
+	CMDNO_ANSWER
+	CMDNO_STOP_PUSH
+	CMDNO_STOP_PULL
+)
+
 type comHttpResp struct {
 	ErrNo  int         `json:"errNo"`
 	ErrMsg string      `json:"errMsg"`
