@@ -14,7 +14,7 @@ func NewPushAction() *pushAction {
 	return &pushAction{}
 }
 
-type xrtcPushRequest struct {
+type xrpcPushRequest struct {
 	Cmdno      int    `json:"cmd_no"`
 	Uid        uint64 `json:"uid"`
 	StreamName string `json:"stream_name"`
@@ -22,7 +22,7 @@ type xrtcPushRequest struct {
 	Video      int    `json:"video"`
 }
 
-type xrtcPushResponse struct {
+type xrpcPushResponse struct {
 	Errno  int    `json:"err_no"`
 	ErrMsg int    `json:"err_msg"`
 	Offer  string `json:"offer"`
@@ -80,14 +80,14 @@ func (p *pushAction) Execute(w http.ResponseWriter, cr *framework.ComRequest) {
 	// log：uid, streamName, audio, video
 	// fmt.Println("uid", uid, "streamname", streamName, "audio:", audio, "video:", video)
 	// 通过rpc拉流
-	req := xrtcPushRequest{
+	req := xrpcPushRequest{
 		Cmdno:      CMDNO_PUSH,
 		Uid:        uint64(uid),
 		StreamName: streamName,
 		Audio:      audio,
 		Video:      video,
 	}
-	var resp xrtcPushResponse
+	var resp xrpcPushResponse
 	if err = framework.Call("xrtc", req, resp, cr.LogId); err != nil {
 		cerr := comerrors.NewError(comerrors.NetworkErr, "backend process error")
 		writeJsonErrorResponse(cerr, w, cr)
