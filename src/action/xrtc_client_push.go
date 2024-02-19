@@ -15,7 +15,7 @@ func NewXrtcClientPushAction() *xrtcClientPushAction {
 }
 
 func (x *xrtcClientPushAction) Execute(w http.ResponseWriter, cr *framework.ComRequest) {
-	t, err := template.ParseFiles("./static/template/push.templ")
+	t, err := template.ParseFiles(framework.GetStaticDir() + "/template/push.html")
 	if err != nil {
 		glog.Error("template.ParseFiles error: ", err)
 		writeHtmlErrorResponse(w, http.StatusNotFound, "404 - Not found")

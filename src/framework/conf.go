@@ -21,6 +21,10 @@ type FrameworkConf struct {
 
 var configFile *goconfig.ConfigFile
 
+func GetStaticDir() string {
+	return gconf.httpStaticDir
+}
+
 func loadConf(confFile string) (*FrameworkConf, error) {
 	var err error
 	configFile, err = goconfig.LoadConfigFile(confFile)

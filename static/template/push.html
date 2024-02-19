@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>P2P screen-share 推流端</title>
+    <style type="text/css">
+      .headWidget {
+        background-color: #f0eeee;
+        margin: 10px 10px 15px 10px;
+        padding: 1.5em 1.5em;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+      }
+
+      .btn {
+        margin: 10px 0 0 10px;
+      }
+
+      video {
+        width: 720px;
+        height: 480px;
+      }
+
+      button {
+        background-color: #2d4280;
+        border: none;
+        border-radius: 2px;
+        color: white;
+        margin: 5px 0 0 0;
+        padding: 0.5em 0.7em;
+      }
+
+      button:hover {
+        background-color: #1d1d4a;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>P2P screen-share 推流端</h3>
+    <div class="headWidget">
+      推流端基本信息
+      <span>
+        uid= {{.uid}} streamName={ {.streamName}} audio= {{.audio}} video=
+        {{.video}}
+      </span>
+    </div>
+    <div>
+      <video id="localVideo" controls autoplay></video>
+    </div>
+    <div class="btn">
+      <button id="pushBtn">开始推流</button>
+      <button id="stopPushBtn">停止推流</button>
+    </div>
+  </body>
+</html>
