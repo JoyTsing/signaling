@@ -11,3 +11,7 @@ type Client struct {
 func NewClient(servers []string) *Client {
 	return &Client{}
 }
+
+func (c *Client) Do(req *Request) (*Response, error) {
+	return &Response{}, nil
+}

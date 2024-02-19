@@ -1,6 +1,8 @@
 package framework
 
 import (
+	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"strconv"
@@ -62,6 +64,20 @@ func setTimeConf(mSection map[string]string, client *xrpc.Client) {
 }
 
 func Call(serviceName string, request interface{}, response interface{}, logId uint32) error {
-	fmt.Println("Call:[", serviceName, "{", request, "}", response, logId, "]")
+	//fmt.Println("Call:[", serviceName, "{", request, "}", response, logId, "]")
+	client, ok := xrpcClients["xrpc."+serviceName]
+	if !ok {
+		return fmt.Errorf("xrpc client not found for %s", serviceName)
+	}
+	content, err := json.Marshal(request)
+	if err != nil {
+		return err
+	}
+	req := xrpc.NewRequest(bytes.NewReader(content), logId)
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	fmt.Println("response:", resp)
 	return nil
 }
