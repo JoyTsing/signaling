@@ -27,7 +27,7 @@ func init() {
 			w.Write([]byte(""))
 			return
 		}
-
+		fmt.Println("===========", r.URL.Path)
 		if action, ok := GActionRouter[r.URL.Path]; ok {
 			if action != nil {
 				// wrap for logging
