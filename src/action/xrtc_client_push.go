@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"signaling/src/framework"
-	"signaling/src/glog"
+	"signaling/third/glog"
 )
 
 type xrtcClientPushAction struct{}

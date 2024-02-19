@@ -1,7 +1,7 @@
 package framework
 
 import (
-	"signaling/src/goconfig"
+	"signaling/third/goconfig"
 )
 
 type FrameworkConf struct {

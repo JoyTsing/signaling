@@ -3,7 +3,7 @@ package framework
 import (
 	"flag"
 
-	"signaling/src/glog"
+	"signaling/third/glog"
 )
 
 var gconf *FrameworkConf

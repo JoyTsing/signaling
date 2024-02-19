@@ -1,2 +1,2 @@
 #!/bin/bash
-go build -o signaling  src/*.go
+go build -o signaling src/*.go

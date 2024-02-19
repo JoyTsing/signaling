@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"signaling/src/glog"
+	"signaling/third/glog"
 )
 
 type ActionInterface interface {

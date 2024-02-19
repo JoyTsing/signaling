@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"time"
 
-	"signaling/src/glog"
+	"signaling/third/glog"
 )
 
 func init() {
