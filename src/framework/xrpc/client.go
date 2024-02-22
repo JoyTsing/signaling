@@ -1,6 +1,7 @@
 package xrpc
 
 import (
+	"bufio"
 	"net"
 	"time"
 )
@@ -61,5 +62,13 @@ func (c *Client) Do(req *Request) (*Response, error) {
 	}
 	connect.SetReadDeadline(time.Now().Add(c.readTimeout()))
 	connect.SetWriteDeadline(time.Now().Add(c.writeTimeout()))
+
+	rw := bufio.NewReadWriter(bufio.NewReader(connect), bufio.NewWriter(connect))
+	if _, err := req.Write(rw); err != nil {
+		return nil, err
+	}
+	if err := rw.Flush(); err != nil {
+		return nil, err
+	}
 	return &Response{}, nil
 }
