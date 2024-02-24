@@ -1,11 +1,11 @@
 "use strict";
 
-let pushBtn = document.getElementById("pushBtn");
+var pushBtn = document.getElementById("pushBtn");
 
-let uid = $("#uid").val();
-let streamName = $("#streamName").val();
-let audio = $("#audio").val();
-let video = $("#video").val();
+var uid = $("#uid").val();
+var streamName = $("#streamName").val();
+var audio = $("#audio").val();
+var video = $("#video").val();
 
 pushBtn.addEventListener("click", function () {
   $.post(
@@ -16,6 +16,14 @@ pushBtn.addEventListener("click", function () {
       audio: audio,
       video: video,
     },
-    function (data, textStatus) {}
+    function (data, textStatus) {
+      console.log("push response: " + JSON.stringify(data));
+      if ("success" == textStatus && 0 == data.errNo) {
+        $("#tips").html("<font color='blue'>推流成功</font>");
+      } else {
+        $("#tips").html("<font color='red'>推流失败</font>");
+      }
+    },
+    "json"
   );
 });

@@ -1,6 +1,7 @@
 package action
 
 import (
+	"encoding/json"
 	"net/http"
 	"strconv"
 
@@ -9,6 +10,11 @@ import (
 )
 
 type pushAction struct{}
+
+type pushData struct {
+	Type string `json:"type"`
+	Sdp  string `json:"sdp"`
+}
 
 func NewPushAction() *pushAction {
 	return &pushAction{}
@@ -24,7 +30,7 @@ type xrpcPushRequest struct {
 
 type xrpcPushResponse struct {
 	Errno  int    `json:"err_no"`
-	ErrMsg int    `json:"err_msg"`
+	ErrMsg string `json:"err_msg"`
 	Offer  string `json:"offer"`
 }
 
@@ -79,7 +85,6 @@ func (p *pushAction) Execute(w http.ResponseWriter, cr *framework.ComRequest) {
 
 	// log：uid, streamName, audio, video
 	// fmt.Println("uid", uid, "streamname", streamName, "audio:", audio, "video:", video)
-	// 通过rpc拉流
 	req := xrpcPushRequest{
 		Cmdno:      CMDNO_PUSH,
 		Uid:        uint64(uid),
@@ -88,9 +93,27 @@ func (p *pushAction) Execute(w http.ResponseWriter, cr *framework.ComRequest) {
 		Video:      video,
 	}
 	var resp xrpcPushResponse
-	if err = framework.Call("xrtc", req, resp, cr.LogId); err != nil {
+	if err = framework.Call("xrtc", req, &resp, cr.LogId); err != nil {
 		cerr := comerrors.NewError(comerrors.NetworkErr, "backend process error"+err.Error())
 		writeJsonErrorResponse(cerr, w, cr)
 		return
 	}
+	//fmt.Printf("%+v\n", resp)
+	if resp.Errno != 0 {
+		cerr := comerrors.NewError(comerrors.NetworkErr, "backend process errno: "+string(rune(resp.Errno)))
+		writeJsonErrorResponse(cerr, w, cr)
+		return
+	}
+	//make response
+	httpResp := comHttpResp{
+		ErrNo:  0,
+		ErrMsg: "",
+		Data: pushData{
+			Type: "offer",
+			Sdp:  resp.Offer,
+		},
+	}
+	b, _ := json.Marshal(httpResp)
+	cr.Logger.AddLogItem("resp", string(b))
+	w.Write(b)
 }

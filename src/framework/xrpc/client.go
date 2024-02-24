@@ -70,5 +70,12 @@ func (c *Client) Do(req *Request) (*Response, error) {
 	if err := rw.Flush(); err != nil {
 		return nil, err
 	}
-	return &Response{}, nil
+
+	//接受response
+	resp, err := ReadResponse(rw)
+	if err != nil {
+		return nil, err
+	}
+	connect.Close()
+	return resp, nil
 }
